@@ -1,52 +1,72 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=MacRoman">
-        <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+        <title>Shaaaaa</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="author" content="Spyros Markopoulos">
+        <meta name="author" content="Spyros Ligouras">
+        <meta name="author" content="Yiannis Klonos">
+        <meta name="author" content="Dimitrios C. Michalakos">
+        <meta name="author" content="Apostolis Michalakos">
+        <meta name="description" content="Made on Rulemotion's 1st birthday." />
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <style type="text/css">
-    		html, body {
-    			height: 100%;
-        		background-color: #000000;
-    		}
-   	 		#contents {
-        		position: absolute;
-        		top: 50%;
-        		left: 50%;
-        		width: 700px;
-        		height: 800px;
-        		margin-top: -400px; /* Half the height */
-        		margin-left: -350px; /* Half the width */
-    		}
-    		img {
-    			display:none;
-    		}
+            html, body {
+                height: 100%;
+                background-color: #000;
+            }
+            img {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 700px;
+                height: 800px;
+                margin-top: -400px; /* Half the height */
+                margin-left: -350px; /* Half the width */
+                transition: opacity 3s ease-in-out;
+                -moz-transition: opacity 3s ease-in-out;
+                -webkit-transition: opacity 3s ease-in-out;
+                -ms-transition: opacity 3s ease-in-out;
+                -o-transition: opacity 3s ease-in-out;
+            }
+            .hidden {
+                opacity: 0;
+            }
+            .displayed {
+                opacity: 1;
+            }
     	</style>
         <script>
-        	function startPlay() {
-        		var myplayer = document.getElementById("player");
-        		$("img").hide().fadeIn(3000);
-        		myplayer.play();
-        	}
-  			
-        	$(document).ready(function() {
-        		var myplayer = document.getElementById("player");
-        		$("img").fadeIn(3000);
-        		myplayer.play();
-			});
+            var lock = false;
+            function play() {
+                if (!lock) {
+                    lock = true;
+                    $("body").css("cursor", "");
+                    document.getElementById("player").play();
+                    if ($("img").hasClass("displayed")) {
+                        lock = false;
+                        $("body").css("cursor", "pointer");
+                    } else {
+                        $("img").removeClass("hidden").addClass("displayed").one("transitionend", function () {
+                            lock = false;
+                            $("body").css("cursor", "pointer");
+                        });                        
+                    }
+                }                
+            }
+            $(document).ready(function () {
+                $("img").on("transitionEnd webkitTransitionEnd msTransitionEnd oTransitionEnd", function () {
+                    $(this).trigger("transitionend");
+                });
+            });
+            $(window).load(play);
         </script>
     </head>
-    <body onclick="startPlay()">
-    	<div id="contents">
-    		<img src="images/scream.png" alt="Happy face" height="800" width="700">
-    	</div>
+    <body onclick="play()">
         <audio id="player" preload="auto">
-  			<source src="audio/shaaaaa.ogg" type="audio/ogg">
-  			<source src="audio/shaaaaa.mp3" type="audio/mpeg">
-		</audio>
+            <source src="audio/shaaaaa.ogg" type="audio/ogg">
+            <source src="audio/shaaaaa.mp3" type="audio/mpeg">
+        </audio>
+        <img src="images/scream.png" alt="Happy face" height="800" width="700" class="hidden">
     </body>
 </html>
