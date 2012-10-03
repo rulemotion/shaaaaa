@@ -7,8 +7,46 @@ and open the template in the editor.
     <head>
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=MacRoman">
+        <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+        <style type="text/css">
+    		html, body {
+    			height: 100%;
+        		background-color: #000000;
+    		}
+   	 		#contents {
+        		position: absolute;
+        		top: 50%;
+        		left: 50%;
+        		width: 700px;
+        		height: 800px;
+        		margin-top: -400px; /* Half the height */
+        		margin-left: -350px; /* Half the width */
+    		}
+    		img {
+    			display:none;
+    		}
+    	</style>
+        <script>
+        	function startPlay() {
+        		var myplayer = document.getElementById("player");
+        		$("img").hide().fadeIn(3000);
+        		myplayer.play();
+        	}
+  			
+        	$(document).ready(function() {
+        		var myplayer = document.getElementById("player");
+        		$("img").fadeIn(3000);
+        		myplayer.play();
+			});
+        </script>
     </head>
-    <body>
-        <div>TODO write content</div>
+    <body onclick="startPlay()">
+    	<div id="contents">
+    		<img src="images/scream.png" alt="Happy face" height="800" width="700">
+    	</div>
+        <audio id="player" preload="auto">
+  			<source src="audio/shaaaaa.ogg" type="audio/ogg">
+  			<source src="audio/shaaaaa.mp3" type="audio/mpeg">
+		</audio>
     </body>
 </html>
